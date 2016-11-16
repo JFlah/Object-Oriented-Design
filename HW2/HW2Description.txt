@@ -1,0 +1,27 @@
+Jack Flaherty
+HW2 Design Description
+
+1.) HW2DiceGame.java was designed to only handle two things:
+	- List of players because no other Player class should know about other players
+
+	- The chip pot because if it was handled by another class, players would be talking to players instead of this class about the pot - that would not make sense.
+
+	It has many methods dedicated to populating the list, taking the initial user input to do this, and manipulating the chip pot as the game progresses. Everything else having to do with the dice game is relegated to the Player class and its subclasses.
+
+2.) Player.java
+	- Abstract class containing all things common to player sub classes
+
+	- The Player abstract class has to do with things pertaining to the players:
+		* Number of chips
+		* Number of rolls
+		* Lots of methods that just call static methods in HW2DiceGame in order to ask about the pot or the player list in order to reduce code redundancy (i.e. calling the static methods in multiple classes instead of calling a single Player method) in the subclasses
+		* Rolling the die on a turn
+		* Ending turn or ace-ing out
+
+	- The only thing that is passed off to subclasses is an abstract method doTurn() because the different computer players and human players all do their turns differently.
+
+	- The HumanPlayer.java doTurn() rolls to see if the player aces out or can choose to take the pot or continue, if so it takes input asking if the player would like to see the chip counts again, and then depending on user input it will do the turn over again or take the pot.
+
+	- If it takes the pot, it calls a method in Player which calls a method in HW2DiceGame. There are many similar instances where a method is called in Player which calls a method that really resides in HW2DiceGame. Again, this is to reduce code redundancy if it is something that is shared across all the different Player classes (like resetting the pot when the turn ends.)
+
+	- The ComputerPlayer1 class calculates a turn instead of taking user input to determine whether or not the player will remain in the turn and roll again or take the pot and end its turn. The ComputerPlayer2 class does the same. The difference is in the calculateMove() method. The only difference is the conditional statement that the method checks to see whether the player will remain in the turn to roll again or take the pot.
